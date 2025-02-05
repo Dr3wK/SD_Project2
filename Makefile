@@ -23,7 +23,7 @@ all:	bibleajax.cgi PutCGI PutHTML
 # TO DO: For bibleajax.cgi, add dependencies to include
 # compiled classes from Project 1 to be linked into the executable program
 bibleajax.cgi:	bibleajax.o
-		$(CC) $(CFLAGS) -o bibleajax.cgi bibleajax.o -lcgicc
+		$(CC) $(CFLAGS) -o bibleajax.cgi bibleajax.o Ref.o Verse.o Bible.o -lcgicc
 		# -l option is necessary to link with cgicc library
 
 # main program to handle AJAX/CGI requests for Bible references
