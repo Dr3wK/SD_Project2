@@ -22,12 +22,25 @@ all:	bibleajax.cgi PutCGI PutHTML
 
 # TO DO: For bibleajax.cgi, add dependencies to include
 # compiled classes from Project 1 to be linked into the executable program
+
+# Ref Object
+Ref.o : Ref.h Ref.cpp
+	$(CC) $(CFLAGS) -c Ref.cpp
+
+# Verse Object
+Verse.o : Ref.h Verse.h Verse.cpp
+	$(CC) $(CFLAGS) -c Verse.cpp
+
+# Bible Object
+Bible.o : Ref.h Verse.h Bible.h Bible.cpp
+	$(CC) $(CFLAGS) -c Bible.cpp
+
 bibleajax.cgi:	bibleajax.o
 		$(CC) $(CFLAGS) -o bibleajax.cgi bibleajax.o Ref.o Verse.o Bible.o -lcgicc
 		# -l option is necessary to link with cgicc library
 
 # main program to handle AJAX/CGI requests for Bible references
-bibleajax.o:	bibleajax.cpp
+bibleajax.o:	Ref.h Verse.h Bible.h bibleajax.cpp
 		$(CC) $(CFLAGS) -c bibleajax.cpp
 
 # TO DO: copy targets to build classes from Project 1:
