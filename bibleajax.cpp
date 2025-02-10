@@ -29,6 +29,10 @@ using namespace std;
 #include "/home/class/csc3004/cgicc/HTMLClasses.h"
 using namespace cgicc;
 
+#include "Ref.h"
+#include "Verse.h"
+#include "Bible.h"
+
 int main() {
   /* A CGI program must send a response header with content type
    * back to the web client before any other output.
@@ -67,6 +71,14 @@ int main() {
   /* TO DO: PUT CODE HERE TO CALL YOUR BIBLE CLASS FUNCTIONS
    *        TO LOOK UP THE REQUESTED VERSES
    */
+  Verse verse;
+  LookupResult result;
+  string verseText;
+  
+  Bible webBible("/home/class/csc3004/Bibles/web-complete");
+  Ref ref(book, chapter, verse, nv)
+
+  verse = webBible.lookup(ref, result);
 
   /* SEND BACK THE RESULTS
    * Finally we send the result back to the client on the standard output stream
@@ -74,12 +86,35 @@ int main() {
    * This string will be inserted as is inside a container on the web page, 
    * so we must include HTML formatting commands to make things look presentable!
    */
+
+  if (result == 0) {
+	  cout << ref.getStrBookName() << " " << ref.getChap() << endl;
+
+	  // display the verse if the verse was successfully found.
+	  verseText = verse.getVerse();
+  }
+  if (amountVerses > 1 && result == 0) {
+	  for (int i = 0; i < amountVerses - 1; i++) {
+		  // set verse object to the next verse
+		  verse = webBible.nextVerse(result);
+
+		  // Check to see if it is a new chpater, if it is print the new refernece
+		  Ref tempRef = verse.getRef();
+		  if (tempRef.getVerse() == 1) {
+			  
+			  verseText = verseText + "/n" tempRef.getStrBookName() + " " + to_string(tempRef.getChap()) + "\n";
+		  }
+		  verseText = verseText + "/n" + verse.getVerse();
+	  }
+  }
+  cout << endl;
+
   if (validInput) {
 	cout << "Search Type: <b>" << **st << "</b>" << endl;
 	cout << "<p>Your result: "
 		 << **book << " " << **chapter << ":" << **verse 
 		 << "<em> The " << **nv
-		 << " actual verse(s) retreived from the server should go here!</em></p>" << endl;
+		 << verseText << endl;
   }
   else {
 	  cout << "<p>Invalid Input: <em>report the more specific problem.</em></p>" << endl;
