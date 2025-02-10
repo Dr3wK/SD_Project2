@@ -76,9 +76,9 @@ int main() {
   string verseText;
   
   Bible webBible("/home/class/csc3004/Bibles/web-complete");
-  Ref ref(book, chapter, verse, nv)
+  Ref ref(book, chapter, verse, nv);
 
-  verse = webBible.lookup(ref, result);
+  bibleVerse = webBible.lookup(ref, result);
 
   /* SEND BACK THE RESULTS
    * Finally we send the result back to the client on the standard output stream
@@ -93,12 +93,12 @@ int main() {
 	  // display the verse if the verse was successfully found.
 	  verseText = bibleVerse.getVerse();
   }
-  if (amountVerses > 1 && result == 0) {
-	  for (int i = 0; i < amountVerses - 1; i++) {
+  if (nv > 1 && result == 0) {
+	  for (int i = 0; i < nv - 1; i++) {
 		  // set verse object to the next verse
-		  verse = webBible.nextVerse(result);
+		  bibleVerse = webBible.nextVerse(result);
 
-		  // Check to see if it is a new chpater, if it is print the new refernece
+		  // Check to see if it is a new chapter, if it is print the new refernece
 		  Ref tempRef = bibleVerse.getRef();
 		  if (tempRef.getVerse() == 1) {
 			  
