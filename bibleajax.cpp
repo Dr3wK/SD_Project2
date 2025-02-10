@@ -71,7 +71,7 @@ int main() {
   /* TO DO: PUT CODE HERE TO CALL YOUR BIBLE CLASS FUNCTIONS
    *        TO LOOK UP THE REQUESTED VERSES
    */
-  Verse verse;
+  Verse bibleVerse;
   LookupResult result;
   string verseText;
   
@@ -91,7 +91,7 @@ int main() {
 	  cout << ref.getStrBookName() << " " << ref.getChap() << endl;
 
 	  // display the verse if the verse was successfully found.
-	  verseText = verse.getVerse();
+	  verseText = bibleVerse.getVerse();
   }
   if (amountVerses > 1 && result == 0) {
 	  for (int i = 0; i < amountVerses - 1; i++) {
@@ -99,12 +99,12 @@ int main() {
 		  verse = webBible.nextVerse(result);
 
 		  // Check to see if it is a new chpater, if it is print the new refernece
-		  Ref tempRef = verse.getRef();
+		  Ref tempRef = bibleVerse.getRef();
 		  if (tempRef.getVerse() == 1) {
 			  
-			  verseText = verseText + "/n" tempRef.getStrBookName() + " " + to_string(tempRef.getChap()) + "\n";
+			  verseText = verseText + "/n" + tempRef.getStrBookName() + " " + to_string(tempRef.getChap()) + "\n";
 		  }
-		  verseText = verseText + "/n" + verse.getVerse();
+		  verseText = verseText + "/n" + bibleVerse.getVerse();
 	  }
   }
   cout << endl;
