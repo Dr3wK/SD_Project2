@@ -101,24 +101,27 @@ int main() {
   }
   if (numVerse > 1 && result == 0) {
 	  for (int i = 0; i < numVerse - 1; i++) {
+		  
+		
 		  // set verse object to the next verse
 		  bibleVerse = webBible.nextVerse(result);
 
 		  // Check to see if it is a new chapter, if it is print the new refernece
 		  Ref tempRef = bibleVerse.getRef();
+
 		  if (tempRef.getVerse() == 1) {
-			  
-			  verseText = verseText + "\n" + tempRef.getStrBookName() + " " + to_string(tempRef.getChap()) + "\n";
+
+			verseText = verseText + "\n" + tempRef.getStrBookName() + " " + to_string(tempRef.getChap()) + "\n";
 		  }
-		  verseText = verseText + "\n" + to_string(verseNum + i + 1) + " " + bibleVerse.getVerse();
-	  }
+		  verseText = verseText + "\n" + to_string(tempRef.getVerse()) + " " + bibleVerse.getVerse();
+		  	  }
   }
   cout << endl;
 
   if (validInput) {
 	cout << "Search Type: <b>" << **st << "</b>" << endl;
 	cout << "<p>Your result: "
-		 << **book << " " << **chapter << ":" << **verse << "\n"
+		 << ref.getStrBookName() << " " << **chapter << ":" << **verse << "\n"
 		 //<< "<em> The " << **nv 
 		 << verseText << endl;
   }
