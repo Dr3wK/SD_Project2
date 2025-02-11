@@ -57,6 +57,7 @@ function getresponse () {
 	// NOTE: This page must be loaded from cs.mvnu.edu to avoid a cross-origin request violation.
 	XMLHttp.open("GET", "/class/csc3004/drekoning/cgi-bin/bibleajax.cgi?"
 		+ "search_type=" + searchType.value
+		+ "&bible=" + document.getElementById('bible').value
 		+ "&book=" + document.getElementById('book').value
 		+ "&chapter=" + document.getElementById('chapter').value
 		+ "&verse=" + document.getElementById('verse').value
@@ -88,6 +89,21 @@ function getresponse () {
 <td align=left valign=top><i>Vines</i> topical dictionary</td>
 </tr>
 </table>
+
+<hr>
+<table>
+<tr>
+<td align=right valign=top>Bible</td>
+<td align=left valign=top>
+<select name="bible" id=bible>
+<option value="1">World English Bible
+<option value="2">King James Version
+<option value="3">Young's Literal Translation
+<option value="4">Webster Translation
+</select>
+</td>
+</tr>
+
 
 <hr>
 <table>
