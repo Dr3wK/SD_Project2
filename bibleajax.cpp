@@ -53,9 +53,9 @@ int main() {
   form_iterator nv = cgi.getElement("num_verse");
 
   // Convert to integers
-  int bookNum = chapter->getIntegerValue();
-  int verseNum = chapter->getIntegerValue();
-  int numVerse = chapter->getIntegerValue();
+  int bookNum = book->getIntegerValue();
+  int verseNum = verse->getIntegerValue();
+  int numVerse = nv->getIntegerValue();
   int chapterNum = chapter->getIntegerValue();
 
   // Convert and check input data
@@ -108,9 +108,9 @@ int main() {
 		  Ref tempRef = bibleVerse.getRef();
 		  if (tempRef.getVerse() == 1) {
 			  
-			  verseText = verseText + "/n" + tempRef.getStrBookName() + " " + to_string(tempRef.getChap()) + "\n";
+			  verseText = verseText + "\n" + tempRef.getStrBookName() + " " + to_string(tempRef.getChap()) + "\n";
 		  }
-		  verseText = verseText + "/n" + bibleVerse.getVerse();
+		  verseText = verseText + "\n" + to_string(verseNum + i + 1) + " " + bibleVerse.getVerse();
 	  }
   }
   cout << endl;
@@ -118,8 +118,8 @@ int main() {
   if (validInput) {
 	cout << "Search Type: <b>" << **st << "</b>" << endl;
 	cout << "<p>Your result: "
-		 << **book << " " << **chapter << ":" << **verse 
-		 << "<em> The " << **nv
+		 << **book << " " << **chapter << ":" << **verse << "\n"
+		 //<< "<em> The " << **nv 
 		 << verseText << endl;
   }
   else {
