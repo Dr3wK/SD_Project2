@@ -39,7 +39,7 @@ Verse Bible::lookup(Ref ref, LookupResult& status) {
 	// Book out of bounds
 	if (ref.getBook() < 1 || ref.getBook() > MAX_BIBLE) {
 		status = NO_BOOK;
-		cout << error(status, ref) << endl;
+		cout << error(ref, status) << endl;
 		return aVerse;
 	}
 
@@ -72,14 +72,14 @@ Verse Bible::lookup(Ref ref, LookupResult& status) {
 	// Check for chapter out of bounds
 	if (ref.getChap() < 1 || ref.getChap() > maxChap) {
 		status = NO_CHAPTER;
-		cout << error(status, ref) << endl;
+		cout << error(ref, status) << endl;
 		return aVerse;
 	}
 
 	// Check for verse out of bounds
 	if (ref.getVerse() < 1 || ref.getVerse() > maxVerse) {
 		status = NO_VERSE;
-		cout << error(status, ref) << endl;
+		cout << error(ref, status) << endl;
 		return aVerse;
 	}
 

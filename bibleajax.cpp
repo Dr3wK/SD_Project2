@@ -52,10 +52,16 @@ int main() {
   form_iterator verse = cgi.getElement("verse");
   form_iterator nv = cgi.getElement("num_verse");
 
+  // Convert to integers
+  int bookNum = chapter->getIntegerValue();
+  int verseNum = chapter->getIntegerValue();
+  int numVerse = chapter->getIntegerValue();
+  int chapterNum = chapter->getIntegerValue();
+
   // Convert and check input data
   bool validInput = false;
   if (chapter != cgi.getElements().end()) {
-	 int chapterNum = chapter->getIntegerValue();
+	 
 	 if (chapterNum > 150) {
 		 cout << "<p>The chapter number (" << chapterNum << ") is too high.</p>" << endl;
 	 }
@@ -76,7 +82,7 @@ int main() {
   string verseText;
   
   Bible webBible("/home/class/csc3004/Bibles/web-complete");
-  Ref ref(book, chapter, verse, nv);
+  Ref ref(bookNum, chapterNum, verseNum, numVerse);
 
   bibleVerse = webBible.lookup(ref, result);
 
@@ -93,8 +99,8 @@ int main() {
 	  // display the verse if the verse was successfully found.
 	  verseText = bibleVerse.getVerse();
   }
-  if (nv > 1 && result == 0) {
-	  for (int i = 0; i < nv - 1; i++) {
+  if (numVerse > 1 && result == 0) {
+	  for (int i = 0; i < numVerse - 1; i++) {
 		  // set verse object to the next verse
 		  bibleVerse = webBible.nextVerse(result);
 
