@@ -18,6 +18,7 @@
  *     refers to the actual string entered in the form's "verse" field.
  */
 
+
 #include <iostream>
 #include <stdio.h>
 #include <string.h>
@@ -54,21 +55,31 @@ int main() {
 	form_iterator nv = cgi.getElement("num_verse");
 
 	// Convert to integers
-	int bookNum = book->getIntegerValue();
-	int verseNum = verse->getIntegerValue();
-	int numVerse = nv->getIntegerValue();
-	int chapterNum = chapter->getIntegerValue();
-	int bibleNum = bible->getIntegerValue();
+	short bookNum = book->getIntegerValue();
+	short verseNum = verse->getIntegerValue();
+	short numVerse = nv->getIntegerValue();
+	short chapterNum = chapter->getIntegerValue();
+	short bibleNum = bible->getIntegerValue();
 	
 	// Convert and check input data
 	bool validInput = false;
 	if (chapter != cgi.getElements().end()) {
 
 		if (chapterNum > 150) {
-			cout << "<p>The chapter number (" << chapterNum << ") is too high.</p>" << endl;
+			cout << "<p>The chapter number (" << chapterNum << ") is too high.</p>" << "<br>";
 		}
 		else if (chapterNum <= 0) {
-			cout << "<p>The chapter must be a positive number.</p>" << endl;
+			cout << "<p>The chapter must be a positive number.</p>" << "<br>";
+		}
+		else if (verseNum <= 0) {
+			cout << "<p>The verse must be a positive number.</p>" << "<br>";
+		}
+		// largest chapter has 176 verses
+		else if (verseNum > 176) {
+			cout << "<p>The Verse number (" << verseNum << ") is too high.</p>" << "<br>";
+		}
+		else if (numVerse <= 0) {
+			cout << "<p>The number of verses must be a positive number.</p>" << "<br>";
 		}
 		else
 			validInput = true;
@@ -79,22 +90,21 @@ int main() {
 	/* TO DO: PUT CODE HERE TO CALL YOUR BIBLE CLASS FUNCTIONS
 	 *        TO LOOK UP THE REQUESTED VERSES
 	 */
-	Verse bibleVerse;
-	LookupResult result;
-
-	// default Bible
-	Bible webBible("/home/class/csc3004/Bibles/web-complete");
-
-	if(bibleNum == 1){Bible webBible("/home/class/csc3004/Bibles/web-complete");}
-	else if(bibleNum == 2){Bible webBible("/home/class/csc3004/Bibles/kjv-complete");}
-	else if(bibleNum == 3){Bible webBible("/home/class/csc3004/Bibles/ylt-complete");}
-	else if(bibleNum == 4){Bible webBible("/home/class/csc3004/Bibles/webster-complete");}
 	
+	LookupResult result = OTHER;
 
+	string bibleVersionArray[4] = {
+     	"/home/class/csc3004/Bibles/web-complete",
+     	"/home/class/csc3004/Bibles/kjv-complete",
+     	"/home/class/csc3004/Bibles/ylt-complete",
+     	"/home/class/csc3004/Bibles/webster-complete"};
+		
+	// get Bible stored at index
+	Bible webBible(bibleVersionArray[bibleNum - 1]);
 
 	Ref ref(bookNum, chapterNum, verseNum, numVerse);
 
-	bibleVerse = webBible.lookup(ref, result);
+	Verse bibleVerse = webBible.lookup(ref, result);
 
 	/* SEND BACK THE RESULTS
 	 * Finally we send the result back to the client on the standard output stream
@@ -114,21 +124,25 @@ int main() {
 		if (numVerse > 1 && result == 0) {
 			for (int i = 0; i < numVerse - 1; i++) {
 
-
 				// set verse object to the next verse
 				bibleVerse = webBible.nextVerse(result);
 
-				// Check to see if it is a new chapter, if it is print the new refernece
+				// Check to see if it is a new chapter, if it is print the new reference
 				Ref tempRef = bibleVerse.getRef();
 
 				if (tempRef.getVerse() == 1) {
 
 					cout << "<br><br>" << tempRef.getStrBookName() << " " << to_string(tempRef.getChap());
 				}
-				cout << "<br>" << to_string(tempRef.getVerse()) << " " << bibleVerse.getVerse();
+
+				// Check to see if empty ref
+				// default value of empty is 0, 0, 0
+				if (tempRef.getBook() != 0) {
+					cout << "<br>" << to_string(tempRef.getVerse()) << " " << bibleVerse.getVerse();
+				}
 			}
 		}
-		cout << endl;
+		cout << "<br>";
 	}
 	else {
 		cout << "<p>Invalid Input: <em>report the more specific problem.</em></p>" << endl;

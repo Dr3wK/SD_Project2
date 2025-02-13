@@ -82,6 +82,7 @@ Verse Bible::lookup(Ref ref, LookupResult& status) {
 		cout << error(ref, status) << endl;
 		return aVerse;
 	}
+	
 
 	// Reset stream to beginning to find the actual verse
 	instream.close();
@@ -119,35 +120,27 @@ Verse Bible::lookup(Ref ref, LookupResult& status) {
 	// If the file is not open, open the file and return the first verse.
 	Verse Bible::nextVerse(LookupResult& status) { 
 		
-		ifstream bibleFile;
 		string line, verseText;
 		Verse tempVerse;
-		short book, chap, verseNum;
-
+		
 		status = OTHER; // placeholder until retrieval is attempted
 
 		if (!instream.is_open()) {
 			cout << "Error, can't open input file: " << infile << endl;
 			return tempVerse;
 		}
-		getline(instream, line);
-
-		// Find the first space separating reference and verse text
-		int firstSpacePos = line.find_first_of(' ');
-		// Create substring with remaining text after initial space
-		verseText = line.substr(0, firstSpacePos); //could possibly work now
-
-		string strbook = GetNextToken(verseText, ":");
-		book = atoi(strbook.c_str());
-		// Get the chapter number
-		string strchap = GetNextToken(verseText, ":");
-		chap = atoi(strchap.c_str());
-		// Get the verse number
-		string strverse = GetNextToken(verseText, " ");
-		verseNum = atoi(strverse.c_str());
+		
+		if (getline(instream, line)) {
 	
-		tempVerse = Verse(line);
-
+			// Find the first space separating reference and verse text
+			int firstSpacePos = line.find_first_of(' ');
+			// Create substring with remaining text after initial space
+			string verseText = line.substr(0, firstSpacePos); //could possibly work now
+			tempVerse = Verse(line);
+		}
+		else {
+			tempVerse = Verse();
+		}
 		return tempVerse;
 	}
 
