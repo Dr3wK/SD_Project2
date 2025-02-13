@@ -21,11 +21,10 @@ Bible::Bible(const string s) { infile = s; }
 // REQUIRED: lookup finds a given verse in this Bible
 Verse Bible::lookup(Ref ref, LookupResult& status) {
 
-	string line, verseText;
-	short book, chap, verseNum;
+	string line;
 
-	// default verse, to be replaced by a Verse object
-	Verse aVerse;
+	// default verse
+	Verse tempVerse;
 
 	status = OTHER; // placeholder until retrieval is attempted
 	instream.open(infile, ios::in);
@@ -33,14 +32,14 @@ Verse Bible::lookup(Ref ref, LookupResult& status) {
 	// Check to see if file is open
 	if (!instream.is_open()) {
 		cout << "Error, can't open input file: " << infile << endl;
-		return aVerse;
+		return tempVerse;
 	}
 
 	// Book out of bounds
 	if (ref.getBook() < 1 || ref.getBook() > MAX_BIBLE) {
 		status = NO_BOOK;
 		cout << error(ref, status) << endl;
-		return aVerse;
+		return tempVerse;
 	}
 
 	// Initialize the max chapter and verse numbers for the given book
@@ -49,16 +48,16 @@ Verse Bible::lookup(Ref ref, LookupResult& status) {
 		// Find the first space separating reference and verse text
 		int firstSpacePos = line.find_first_of(' ');
 		// Create substring with remaining text after initial space
-		verseText = line.substr(0, firstSpacePos); //could possibly work now
+		string verseText = line.substr(0, firstSpacePos); //could possibly work now
 
 		string strbook = GetNextToken(verseText, ":");
-		book = atoi(strbook.c_str());
+		short book = atoi(strbook.c_str());
 		// Get the chapter number
 		string strchap = GetNextToken(verseText, ":");
-		chap = atoi(strchap.c_str());
+		short chap = atoi(strchap.c_str());
 		// Get the verse number
 		string strverse = GetNextToken(verseText, " ");
-		verseNum = atoi(strverse.c_str());
+		short verseNum = atoi(strverse.c_str());
 
 		// Set the max chapter and verse for each book for error handling
 		if (ref.getBook() == book) {
@@ -73,14 +72,14 @@ Verse Bible::lookup(Ref ref, LookupResult& status) {
 	if (ref.getChap() < 1 || ref.getChap() > maxChap) {
 		status = NO_CHAPTER;
 		cout << error(ref, status) << endl;
-		return aVerse;
+		return tempVerse;
 	}
 
 	// Check for verse out of bounds
 	if (ref.getVerse() < 1 || ref.getVerse() > maxVerse) {
 		status = NO_VERSE;
 		cout << error(ref, status) << endl;
-		return aVerse;
+		return tempVerse;
 	}
 	
 
@@ -93,34 +92,34 @@ Verse Bible::lookup(Ref ref, LookupResult& status) {
 			// Find the first space separating reference and verse text
 			int firstSpacePos = line.find_first_of(' ');
 			// Create substring with remaining text after initial space
-			verseText = line.substr(0, firstSpacePos); //could possibly work now
+			string verseText = line.substr(0, firstSpacePos); //could possibly work now
 
 			string strbook = GetNextToken(verseText, ":");
-			book = atoi(strbook.c_str());
+			short book = atoi(strbook.c_str());
 			// Get the chapter number
 			string strchap = GetNextToken(verseText, ":");
-			chap = atoi(strchap.c_str());
+			short chap = atoi(strchap.c_str());
 			// Get the verse number
 			string strverse = GetNextToken(verseText, " ");
-			verseNum = atoi(strverse.c_str());
+			short verseNum = atoi(strverse.c_str());
 
 			Ref compRef = Ref(book, chap, verseNum, 1);
 			if (compRef == ref) {
-				aVerse = Verse(line);
+				tempVerse = Verse(line);
 				status = SUCCESS;
 				break;
 			}
 		}
 		
 	}
-	return aVerse;
+	return tempVerse;
 }
 
 	// REQUIRED: Return the next verse from the Bible file stream if the file is open.
 	// If the file is not open, open the file and return the first verse.
 	Verse Bible::nextVerse(LookupResult& status) { 
 		
-		string line, verseText;
+		string line;
 		Verse tempVerse;
 		
 		status = OTHER; // placeholder until retrieval is attempted

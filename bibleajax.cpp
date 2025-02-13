@@ -93,18 +93,14 @@ int main() {
 	
 	LookupResult result = OTHER;
 
-	string bibleVersionArray[4] = {
-     	"/home/class/csc3004/Bibles/web-complete",
+	string bibleVersionArray[3] = {
+		"/home/class/csc3004/Bibles/web-complete",
      	"/home/class/csc3004/Bibles/kjv-complete",
      	"/home/class/csc3004/Bibles/ylt-complete",
-     	"/home/class/csc3004/Bibles/webster-complete"};
+	};
 		
 	// get Bible stored at index
 	Bible webBible(bibleVersionArray[bibleNum - 1]);
-
-	Ref ref(bookNum, chapterNum, verseNum, numVerse);
-
-	Verse bibleVerse = webBible.lookup(ref, result);
 
 	/* SEND BACK THE RESULTS
 	 * Finally we send the result back to the client on the standard output stream
@@ -114,9 +110,14 @@ int main() {
 	 */
 
 	if (validInput) {
-		cout << "Search Type: <b>" << **st << "</b>" << endl;
+		//cout << "Search Type: <b>" << **st << "</b>";
+
+		Ref ref(bookNum, chapterNum, verseNum, numVerse);
+
+		Verse bibleVerse = webBible.lookup(ref, result);
+
 		cout << "<p>"
-			<< ref.getStrBookName() << " " << **chapter << ":" << **verse << "<br>" << endl;
+			<< ref.getStrBookName() << " " << **chapter << ":" << **verse << "<br>";
 		if (result == 0) {
 			// display the verse if the verse was successfully found.
 			cout << to_string(ref.getVerse()) << " " << bibleVerse.getVerse();
@@ -136,7 +137,8 @@ int main() {
 				}
 
 				// Check to see if empty ref
-				// default value of empty is 0, 0, 0
+				// Default value of empty is 0, 0, 0
+				// Prints if book is not default value
 				if (tempRef.getBook() != 0) {
 					cout << "<br>" << to_string(tempRef.getVerse()) << " " << bibleVerse.getVerse();
 				}

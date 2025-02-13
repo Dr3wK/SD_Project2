@@ -28,7 +28,7 @@ string GetNextToken(string& str, const string& delimiters = " ") {
 
 // Ref member functions
 
-Ref::Ref() {book = 0; chap = 0; verse = 0;}  	// Default constructor
+Ref::Ref() { book = 0; chap = 0; verse = 0; numOfVerses = 0; }  	// Default constructor
 
 Ref::Ref(const string s) { // Parse constructor - receives a line "34:5:7 text"
     string rtext = s; // make local copy of string to avoid modifying parameter

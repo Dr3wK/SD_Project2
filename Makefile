@@ -56,4 +56,6 @@ PutHTML:
 	ls -l /var/www/html/class/csc3004/$(USER)
 
 clean:
-	rm *.o core bibleajax.cgi
+	rm *.o bibleajax.cgi
+	# rm *.o core bibleajax.cgi
+
