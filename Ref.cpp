@@ -1,5 +1,6 @@
 // Ref class function definitions
 // Computer Science, MVNU
+// Additions by Drew Koning
 
 #include "Ref.h"
 #include <iostream>

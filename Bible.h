@@ -1,5 +1,6 @@
 // Class Bible
 // Computer Science, MVNU
+// Additions by Drew Koning
 //
 // A Bible object represents a particular version of the Bible,
 // and provides functions to lookup verses and references.

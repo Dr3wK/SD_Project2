@@ -1,5 +1,6 @@
 // Verse class function definitions
 // Computer Science, MVNU
+// Additions by Drew Koning
 
 #include "Verse.h"
 #include <iostream>
@@ -36,3 +37,4 @@ Ref Verse::getRef() {
 void Verse::display() {
     cout << verseRef.getVerse() << " " << verseText << endl;
  }
+

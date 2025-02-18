@@ -2,6 +2,7 @@
 # Bob Kasper, MVNU Computer Science
 # updated January 2020 to use
 # c++11 compiler option, current paths on cs.mvnu.edu
+# Additions by Drew Koning
 
 # This is a Makefile for the Bible web app demo program.
 # Copy this directory to a location within your home directory. 

@@ -2,7 +2,8 @@
  * By James Skon, Febrary 10, 2011
  * updated by Bob Kasper, January 2020
  * Mount Vernon Nazarene University
- *
+ * Additions by Drew Koning
+ * 
  * This sample program works using the cgicc AJAX library to
  * allow live communication between a web page and a program running on the
  * same server that hosts the web server.
